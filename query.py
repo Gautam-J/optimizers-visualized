@@ -1,12 +1,11 @@
 import numpy as np
-
 from typing import Tuple
 
 
 def get_iteration_number() -> int:
-    ui = input("Enter the number of iterations for gradient descent, leave black for 1000: ")
+    ui = input("Enter the number of iterations for gradient descent, leave black for 100: ")
     if ui == '':
-        return 1000
+        return 100
 
     return int(ui)
 

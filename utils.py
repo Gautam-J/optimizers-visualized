@@ -3,8 +3,9 @@ import torch
 import random
 import logging
 import numpy as np
-
-from typing import Optional, Callable
+import matplotlib.pyplot as plt
+from matplotlib import animation
+from typing import Optional, Callable, Dict
 
 from query import (
     get_starting_points,
@@ -14,8 +15,72 @@ from query import (
 )
 
 from loss_functions import (
-    sphere_function
+    sphere_function,
+    hyperbolic_paraboloid,
+    rosenbrock,
+    matyas,
+    himmelblau,
+    mc_cormick,
+    styblinski_tang
 )
+
+
+def plot_graph(history: Dict[str, float], loss_fn: Callable,
+               optimizer: str) -> None:
+
+    def animate(i, dataset, line, c_line):
+        line.set_data(dataset[0:2, :i])
+        line.set_3d_properties(dataset[2, :i])
+        c_line.set_data(dataset[0:2, :i])
+        return line, c_line
+
+    plt.style.use('seaborn')
+
+    fig = plt.figure(figsize=(16, 9))
+    ax1 = fig.add_subplot(121, projection='3d')
+    ax1.view_init(elev=30, azim=130)
+
+    x = np.linspace(-6, 6, 25)
+    y = np.linspace(-6, 6, 25)
+    X, Y = np.meshgrid(x, y)  # all possible combinations of x and y
+    Z = loss_fn([X, Y])
+    ax1.plot_surface(X, Y, Z, cmap='gray', alpha=0.8)
+
+    levels = np.linspace(0, 500, 30)
+    ax2 = fig.add_subplot(122)
+    ax2.contourf(X, Y, Z, levels, cmap='jet', alpha=0.5)
+
+    x_history = np.array([i[0] for i in history['weights']])
+    y_history = np.array([i[1] for i in history['weights']])
+    z_history = np.array(history['loss'])
+    dataset = np.array([x_history, y_history, z_history])
+
+    total_iter = len(x_history) - 1
+    print(f"{total_iter = }")
+    n_frames = total_iter + 1
+    interval = 5 * 1000 / n_frames
+    fps = (1 / (interval / 1000))
+
+    line = ax1.plot(dataset[0], dataset[1], dataset[2], label='optimization',
+                    c='r', marker='.', alpha=0.4)[0]
+    ax1.set_title(f'{loss_fn.__name__} using {optimizer}')
+    ax1.set_xlabel('X')
+    ax1.set_ylabel('Y')
+    ax1.set_zlabel('f(x, y)')
+    ax1.legend()
+
+    c_line = ax2.plot(dataset[0], dataset[1], label='optimization', c='r',
+                      marker='.', alpha=0.4)[0]
+
+    ani = animation.FuncAnimation(fig, animate, frames=n_frames, blit=False,
+                                  interval=interval, repeat=True,
+                                  fargs=(dataset, line, c_line))
+
+    print("Saving animation...")
+    ani.save(f"visualizations/{loss_fn.__name__}.mp4", fps=fps)
+    print("Animation saved!")
+
+    plt.show()
 
 
 def get_loss_fn() -> Callable:
@@ -29,11 +94,20 @@ def get_loss_fn() -> Callable:
 
     func_num = get_function_number()
 
-    # TODO: Add more loss functions
     if func_num == 1:
         loss_fn = sphere_function
-    else:
-        loss_fn = np.sum
+    elif func_num == 2:
+        loss_fn = hyperbolic_paraboloid
+    elif func_num == 3:
+        loss_fn = rosenbrock
+    elif func_num == 4:
+        loss_fn = matyas
+    elif func_num == 5:
+        loss_fn = himmelblau
+    elif func_num == 6:
+        loss_fn = mc_cormick
+    elif func_num == 7:
+        loss_fn = styblinski_tang
 
     return loss_fn
 
