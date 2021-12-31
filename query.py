@@ -26,9 +26,9 @@ def get_function_number() -> int:
 
 
 def get_learning_rate() -> float:
-    ui = input("Enter the learning rate to be used, leave blank for 1e-2: ")
+    ui = input("Enter the learning rate to be used, leave blank for 1e-1: ")
     if ui == '':
-        return 1e-2
+        return 1e-1
 
     return float(ui)
 

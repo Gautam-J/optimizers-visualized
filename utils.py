@@ -52,7 +52,7 @@ def plot_graph(history: Dict[str, float], loss_fn: Callable,
     ax1 = fig.add_subplot(121, projection='3d')
     ax1.view_init(elev=30, azim=130)
 
-    if loss_fn.__class__.__name__ == 'matyas':
+    if loss_fn.__name__ == 'matyas':
         ax1.view_init(elev=15, azim=75)
 
     x = np.linspace(-5.2, 5.2, 25)
