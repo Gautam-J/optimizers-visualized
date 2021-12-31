@@ -15,13 +15,8 @@ from query import (
 )
 
 from loss_functions import (
-    sphere_function,
-    hyperbolic_paraboloid,
-    rosenbrock,
     matyas,
     himmelblau,
-    mc_cormick,
-    styblinski_tang
 )
 
 
@@ -57,13 +52,13 @@ def plot_graph(history: Dict[str, float], loss_fn: Callable,
     ax1 = fig.add_subplot(121, projection='3d')
     ax1.view_init(elev=30, azim=130)
 
-    x = np.linspace(-6, 6, 25)
-    y = np.linspace(-6, 6, 25)
+    x = np.linspace(-5.2, 5.2, 25)
+    y = np.linspace(-5.2, 5.2, 25)
     X, Y = np.meshgrid(x, y)  # all possible combinations of x and y
     Z = loss_fn([X, Y])
-    ax1.plot_surface(X, Y, Z, cmap='gray', alpha=0.8)
+    ax1.plot_surface(X, Y, Z, cmap='coolwarm', alpha=0.8)
 
-    levels = np.linspace(0, 500, 30)
+    levels = np.linspace(0, 500, 30)  # contours from 0 to 500, of 30 parts
     ax2 = fig.add_subplot(122)
     ax2.contourf(X, Y, Z, levels, cmap='jet', alpha=0.5)
 
@@ -111,19 +106,9 @@ def get_loss_fn() -> Callable:
     func_num = get_function_number()
 
     if func_num == 1:
-        loss_fn = sphere_function
-    elif func_num == 2:
-        loss_fn = hyperbolic_paraboloid
-    elif func_num == 3:
-        loss_fn = rosenbrock
-    elif func_num == 4:
         loss_fn = matyas
-    elif func_num == 5:
+    elif func_num == 2:
         loss_fn = himmelblau
-    elif func_num == 6:
-        loss_fn = mc_cormick
-    elif func_num == 7:
-        loss_fn = styblinski_tang
 
     return loss_fn
 
@@ -148,10 +133,8 @@ def get_optimizer(weights: torch.Tensor) -> torch.optim:
     if opt_num == 1:
         opt = torch.optim.SGD([weights], lr=lr)
     elif opt_num == 2:
-        opt = torch.optim.SGD([weights], lr=lr, momentum=0.3)
-    elif opt_num == 3:
         opt = torch.optim.Adam([weights], lr=lr)
-    else:
+    elif opt_num == 3:
         opt = torch.optim.RMSprop([weights], lr=lr)
 
     return opt
@@ -179,7 +162,7 @@ def get_initial_weights(random: bool, device: torch.device) -> torch.Tensor:
     """
 
     if random:
-        return torch.normal(mean=0.0, std=2.45, size=(2,), dtype=torch.float64,
+        return torch.normal(mean=0.0, std=2.23, size=(2,), dtype=torch.float64,
                             requires_grad=True, device=device)
 
     x, y = get_starting_points()

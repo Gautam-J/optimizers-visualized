@@ -12,29 +12,14 @@ def get_iteration_number() -> int:
 
 def get_function_number() -> int:
     print("Select the function to minimize:")
-    print("\t1. Sphere function")
+    print("\t1. Matyas function")
     print("\t\tGlobal Minima: (0, 0) = 0")
 
-    print("\t2. Hyperbolic Paraboloid")
-    print("\t\tSaddle Point: (0, 0)")
-
-    print("\t3. Rosenbrock function")
-    print("\t\tGlobal Minima: (1, 1) = 0")
-
-    print("\t4. Matyas function")
-    print("\t\tGlobal Minima: (0, 0) = 0")
-
-    print("\t5. Himmelblau's function")
+    print("\t2. Himmelblau's function")
     print("\t\tLocal Minima: (3, 2) = 0")
     print("\t\tLocal Minima: (-2.805118, 3.131312) = 0")
     print("\t\tLocal Minima: (-3.779310, -3.283186) = 0")
     print("\t\tLocal Minima: (3.584428, -1.848126) = 0")
-
-    print("\t6. McCormick function")
-    print("\t\tGlobal Minima: (-0.54719, -1.54719) = -1.9133")
-
-    print("\t7. Styblinski-Tang function")
-    print("\t\tGlobal Minima: (-2.903534, -2.903545) = -78.33233")
 
     ui = int(input("Enter the number of the function to minimize: "))
     return ui
@@ -51,9 +36,8 @@ def get_learning_rate() -> float:
 def get_optimizer_number() -> int:
     print("Select the optimizer to use:")
     print("\t1. Stochastic Gradient Descent (SGD)")
-    print("\t2. SGD with Momentum")
-    print("\t3. Adaptive Moment Estimation (Adam)")
-    print("\t4. Root Mean Squared Propagation (RMSprop)")
+    print("\t2. Adaptive Moment Estimation (Adam)")
+    print("\t3. Root Mean Squared Propagation (RMSprop)")
 
     ui = int(input("Enter the number for the optimizer to use: "))
     return ui
