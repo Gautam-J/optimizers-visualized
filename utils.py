@@ -4,18 +4,79 @@ import random
 import logging
 import numpy as np
 
-from typing import Optional
+from typing import Optional, Callable
 
-from query import get_starting_points
+from query import (
+    get_starting_points,
+    get_optimizer_number,
+    get_learning_rate,
+    get_function_number
+)
+
+from loss_functions import (
+    sphere_function
+)
 
 
-def get_initial_weights(random: bool) -> torch.Tensor:
+def get_loss_fn() -> Callable:
+    """Returns a callable function that is to be minimized.
+
+    Returns
+    -------
+    Callable
+        The function for which the gradients will be calculated.
+    """
+
+    func_num = get_function_number()
+
+    # TODO: Add more loss functions
+    if func_num == 1:
+        loss_fn = sphere_function
+    else:
+        loss_fn = np.sum
+
+    return loss_fn
+
+
+def get_optimizer(weights: torch.Tensor) -> torch.optim:
+    """Returns a pytorch optimizer, based on user selection.
+
+    Parameters
+    ----------
+    weights : torch.Tensor
+        The variables for which gradient is to be computed.
+
+    Returns
+    -------
+    torch.optim
+        A specific pytorch optimizer based on user preference.
+    """
+
+    opt_num = get_optimizer_number()
+    lr = get_learning_rate()
+
+    if opt_num == 1:
+        opt = torch.optim.SGD([weights], lr=lr)
+    elif opt_num == 2:
+        opt = torch.optim.SGD([weights], lr=lr, momentum=1e-2)
+    elif opt_num == 3:
+        opt = torch.optim.Adam([weights], lr=lr)
+    else:
+        opt = torch.optim.RMSprop([weights], lr=lr)
+
+    return opt
+
+
+def get_initial_weights(random: bool, device: torch.device) -> torch.Tensor:
     """Returns weights that are to be used as initial weights.
 
     Parameters
     ----------
     random : bool
         A boolean value indicating whether the random weights must be returned.
+
+    device : torch.device
+        Device used for the computation, either CPU or GPU.
 
     Returns
     -------
@@ -29,10 +90,11 @@ def get_initial_weights(random: bool) -> torch.Tensor:
 
     if random:
         return torch.normal(mean=0.0, std=2.45, size=(2,), dtype=torch.float64,
-                            requires_grad=True)
+                            requires_grad=True, device=device)
 
     x, y = get_starting_points()
-    return torch.tensor([x, y], dtype=torch.float64, requires_grad=True)
+    return torch.tensor([x, y], dtype=torch.float64, requires_grad=True,
+                        device=device)
 
 
 def set_pytorch_seed(seed: Optional[int] = 42) -> None:
