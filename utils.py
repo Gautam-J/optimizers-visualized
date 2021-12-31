@@ -27,12 +27,29 @@ from loss_functions import (
 
 def plot_graph(history: Dict[str, float], loss_fn: Callable,
                optimizer: str) -> None:
+    """Renders and saves an animation of the data passed in the `history`
+    parameter.
+
+    Parameters
+    ----------
+    history : dict[str, float]
+        The values of the weights after every iteration of gradient descent.
+
+    loss_fn : callable
+        The loss function upon which the weights were trained.
+
+    optimizer: str
+        The name of the optimizer used for gradient descent.
+    """
 
     def animate(i, dataset, line, c_line):
         line.set_data(dataset[0:2, :i])
         line.set_3d_properties(dataset[2, :i])
         c_line.set_data(dataset[0:2, :i])
         return line, c_line
+
+    if not os.path.exists('visualizations'):
+        os.makedirs('visualizations')
 
     plt.style.use('seaborn')
 
@@ -56,7 +73,6 @@ def plot_graph(history: Dict[str, float], loss_fn: Callable,
     dataset = np.array([x_history, y_history, z_history])
 
     total_iter = len(x_history) - 1
-    print(f"{total_iter = }")
     n_frames = total_iter + 1
     interval = 5 * 1000 / n_frames
     fps = (1 / (interval / 1000))
@@ -77,7 +93,7 @@ def plot_graph(history: Dict[str, float], loss_fn: Callable,
                                   fargs=(dataset, line, c_line))
 
     print("Saving animation...")
-    ani.save(f"visualizations/{loss_fn.__name__}.mp4", fps=fps)
+    ani.save(f"visualizations/{loss_fn.__name__}_{optimizer}.mp4", fps=fps)
     print("Animation saved!")
 
     plt.show()
@@ -132,7 +148,7 @@ def get_optimizer(weights: torch.Tensor) -> torch.optim:
     if opt_num == 1:
         opt = torch.optim.SGD([weights], lr=lr)
     elif opt_num == 2:
-        opt = torch.optim.SGD([weights], lr=lr, momentum=1e-2)
+        opt = torch.optim.SGD([weights], lr=lr, momentum=0.3)
     elif opt_num == 3:
         opt = torch.optim.Adam([weights], lr=lr)
     else:
