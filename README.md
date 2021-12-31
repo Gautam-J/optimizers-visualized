@@ -21,7 +21,7 @@ Visualization of how different optimizers handle mathematical functions for opti
 
 `python main.py`
 
-The project is designed to be iteractive, making it easy for the user to change any default values simply using `stdin`.
+The project is designed to be interactive, making it easy for the user to change any default values simply using `stdin`.
 
 ## Functions for optimization
 
@@ -63,11 +63,11 @@ SGD on Himmelblau's function fails to converge even when the learning rate is re
 
 <img src="./readme_media/HimmelBlauSGD3e_2.gif" height=500>
 
-It only converges when the learning rate is further lowered to 0.01, still overshooting at the early iterations.
+It only converges when the learning rate is further lowered to 0.01, still overshooting during the early iterations.
 
 <img src="./readme_media/HimmelblauSGDe1_2.gif" height=500>
 
-### Root Mean Squared Propagation
+### Root Mean Square Propagation
 
 RMSProp with the default hyperparameters, except the learning rate.
 
