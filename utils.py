@@ -90,7 +90,7 @@ def plot_graph(history: Dict[str, float], loss_fn: Callable,
                                   interval=interval, repeat=True,
                                   fargs=(dataset, line, c_line))
 
-    print("Saving animation...")
+    print("\nSaving animation...")
     ani.save(f"visualizations/{loss_fn.__name__}_{optimizer}.mp4", fps=fps)
     print("Animation saved!")
 

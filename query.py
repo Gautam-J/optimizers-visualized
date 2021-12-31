@@ -3,7 +3,7 @@ from typing import Tuple
 
 
 def get_iteration_number() -> int:
-    ui = input("Enter the number of iterations for gradient descent, leave black for 100: ")
+    ui = input("Enter the number of iterations for gradient descent, leave blank for 100: ")
     if ui == '':
         return 100
 
@@ -11,7 +11,7 @@ def get_iteration_number() -> int:
 
 
 def get_function_number() -> int:
-    print("Select the function to minimize:")
+    print("\nSelect the function to minimize:")
     print("\t1. Matyas function")
     print("\t\tGlobal Minima: (0, 0) = 0")
 
@@ -21,7 +21,7 @@ def get_function_number() -> int:
     print("\t\tLocal Minima: (-3.779310, -3.283186) = 0")
     print("\t\tLocal Minima: (3.584428, -1.848126) = 0")
 
-    ui = int(input("Enter the number of the function to minimize: "))
+    ui = int(input("\nEnter the number of the function to minimize: "))
     return ui
 
 
@@ -34,12 +34,12 @@ def get_learning_rate() -> float:
 
 
 def get_optimizer_number() -> int:
-    print("Select the optimizer to use:")
+    print("\nSelect the optimizer to use:")
     print("\t1. Stochastic Gradient Descent (SGD)")
     print("\t2. Adaptive Moment Estimation (Adam)")
     print("\t3. Root Mean Squared Propagation (RMSprop)")
 
-    ui = int(input("Enter the number for the optimizer to use: "))
+    ui = int(input("\nEnter the number for the optimizer to use: "))
     return ui
 
 
