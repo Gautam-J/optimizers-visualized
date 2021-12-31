@@ -55,17 +55,17 @@ The vanilla stochastic gradient descent optimizer, with **no** additional functi
 
 We can see that SGD takes an almost direct path downwards, and then heads towards the global minima.
 
-<img src="./readme_media/MatyasSGD1e_1.gif" height=400>
+<img src="./readme_media/MatyasSGD1e_1.gif" height=500>
 
 #### SGD on Himmelblau's function
 
 SGD on Himmelblau's function fails to converge even when the learning rate is reduced from 0.1 to 0.03.
 
-<img src="./readme_media/HimmelBlauSGD3e_2.gif" height=400>
+<img src="./readme_media/HimmelBlauSGD3e_2.gif" height=500>
 
 It only converges when the learning rate is further lowered to 0.01, still overshooting at the early iterations.
 
-<img src="./readme_media/HimmelblauSGDe1_2.gif" height=400>
+<img src="./readme_media/HimmelblauSGDe1_2.gif" height=500>
 
 ### Root Mean Squared Propagation
 
@@ -75,13 +75,13 @@ RMSProp with the default hyperparameters, except the learning rate.
 
 RMSProp first reaches a global minima in one dimension, and then switches to minimizing another dimension. This can be hurtful if there are saddle points in the function which is to be minimized.
 
-<img src="./readme_media/MatyasRMSProp1e_1.gif" height=400>
+<img src="./readme_media/MatyasRMSProp1e_1.gif" height=500>
 
 #### RMSProp on Himmelblau's function
 
 By trying to minimize one dimension first, RMSProp overshoots and has to return back to the proper path. It then minimizes the next dimension.
 
-<img src="./readme_media/HimmelBlauRSMProp1e_1.gif" height=400>
+<img src="./readme_media/HimmelBlauRSMProp1e_1.gif" height=500>
 
 ### Adaptive Moment Estimation
 
@@ -91,13 +91,13 @@ Adam optimizer with the default hyperparameters, except the learning rate.
 
 Due to the momentum factor and the exponentially weighted average factor, Adam shoots past the minimal point, and returns back.
 
-<img src="./readme_media/MatyasAdam1e_1.gif" height=400>
+<img src="./readme_media/MatyasAdam1e_1.gif" height=500>
 
 #### Adam on Himmelblau's function
 
 Adam slides around the curves, again mostly due to the momentum factor.
 
-<img src="./readme_media/HimmelBlauAdam1e_1.gif" height=400>
+<img src="./readme_media/HimmelBlauAdam1e_1.gif" height=500>
 
 ## Links
 
