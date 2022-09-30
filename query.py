@@ -52,18 +52,12 @@ def get_starting_points() -> Tuple[float, float]:
 
 def is_random_initialization() -> bool:
     ui = input("Do you want the weights to be initialized randomly? [y/n]: ")
-    if ui.lower() == 'n':
-        return False
-
-    return True
+    return ui.lower() != 'n'
 
 
 def _is_random_seed() -> bool:
     ui = input("Do you want to initialize the seed randomly? [y/n]: ")
-    if ui.lower() == 'n':
-        return False
-
-    return True
+    return ui.lower() != 'n'
 
 
 def _get_seed_value() -> int:
